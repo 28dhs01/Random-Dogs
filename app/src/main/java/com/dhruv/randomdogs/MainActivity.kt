@@ -34,13 +34,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        requestPermission()
         getData()
         binding.btnNext.setOnClickListener {
             getData()
         }
 
         binding.btnShare.setOnClickListener {
-            requestPermission()
             val bitmapDrawable = binding.ivDog.drawable as BitmapDrawable
             val bitmap = bitmapDrawable.bitmap
             val bitmapPath = MediaStore.Images.Media.insertImage(contentResolver,bitmap,"bitmap img","dog img")
@@ -72,6 +72,7 @@ class MainActivity : AppCompatActivity() {
                 binding.progressBar.isVisible = false
 
                 Glide.with(baseContext).load(responseBody?.message).into(binding.ivDog)
+
             }
 
             override fun onFailure(call: Call<DogDataClass?>, t: Throwable) {
